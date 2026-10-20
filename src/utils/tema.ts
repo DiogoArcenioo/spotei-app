@@ -1,0 +1,45 @@
+import { StyleSheet } from "react-native";
+export const cores = {
+  fundo: "#050510",
+  superficie: "#101021",
+  destaque: "#18E7FF",
+  magenta: "#FF35DD",
+  roxo: "#9147FF",
+  texto: "#F5F6FF",
+  secundario: "#A7A6BF",
+  borda: "#272735",
+  erro: "#FF8A9B",
+};
+export const estilos = StyleSheet.create({
+  tela: { flex: 1, backgroundColor: cores.fundo },
+  conteudo: { padding: 20, gap: 16, paddingBottom: 36 },
+  titulo: {
+    color: cores.texto,
+    fontSize: 24,
+    fontWeight: "700",
+    letterSpacing: -0.5,
+  },
+  subtitulo: { color: cores.texto, fontSize: 17, fontWeight: "700" },
+  texto: { color: cores.texto, fontSize: 15, lineHeight: 22 },
+  secundario: { color: cores.secundario, fontSize: 13, lineHeight: 20 },
+  destaque: { color: cores.destaque },
+  linha: { flexDirection: "row", alignItems: "center", gap: 12 },
+  entre: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+  },
+  card: {
+    backgroundColor: cores.superficie,
+    padding: 18,
+    borderRadius: 14,
+    gap: 12,
+    borderWidth: 1,
+    borderColor: cores.borda,
+  },
+  erro: { color: cores.erro, fontSize: 13, lineHeight: 20 },
+  vazio: { padding: 28, gap: 10, alignItems: "center" },
+  grade: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
+  coluna: { width: "48%", gap: 8 },
+});

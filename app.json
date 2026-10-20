@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Spotei",
+    "slug": "spotei-app",
+    "version": "1.0.0",
+    "scheme": "spotei",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.spotei.app"
+    },
+    "android": {
+      "package": "com.spotei.app",
+      "blockedPermissions": ["android.permission.RECORD_AUDIO"]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "server"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permita selecionar a foto do carro para seu spot.",
+          "cameraPermission": "Permita fotografar carros para publicar seus spots.",
+          "microphonePermission": false
+        }
+      ],
+      "expo-image",
+      "expo-status-bar",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
