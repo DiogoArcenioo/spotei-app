@@ -24,14 +24,46 @@ import type {
 let fila: Promise<unknown> = Promise.resolve();
 async function dados() {
   const banco = (await lerLocal<DadosDemo>("demo")) ?? criarDadosDemo();
-  // Inclui no catálogo também os modelos identificados por IA em versões anteriores.
-  for (const publicacao of banco.publicacoes) {
-    const carro = banco.catalogo.find(
-      (c) => chaveCarro(c) === chaveCarro(publicacao.carro),
-    );
-    if (carro) publicacao.carro.id = carro.id;
-    else banco.catalogo.push({ ...publicacao.carro });
+  let corrigido = false;
+  const catalogo = new Map<string, (typeof banco.catalogo)[number]>();
+  const ids = new Set<string>();
+  const catalogoUnico: typeof banco.catalogo = [];
+  for (const carro of banco.catalogo) {
+    const chave = chaveCarro(carro);
+    const existente = catalogo.get(chave);
+    if (existente) {
+      corrigido = true;
+      continue;
+    }
+    if (ids.has(carro.id)) {
+      carro.id = randomUUID();
+      corrigido = true;
+    }
+    ids.add(carro.id);
+    catalogo.set(chave, carro);
+    catalogoUnico.push(carro);
   }
+  if (catalogoUnico.length !== banco.catalogo.length) {
+    banco.catalogo = catalogoUnico;
+  }
+
+  // Inclui no catálogo modelos antigos e corrige IDs repetidos em dados já salvos.
+  for (const publicacao of banco.publicacoes) {
+    const carro = catalogo.get(chaveCarro(publicacao.carro));
+    if (carro) {
+      if (publicacao.carro.id !== carro.id) corrigido = true;
+      publicacao.carro.id = carro.id;
+    } else {
+      const idAnterior = publicacao.carro.id;
+      if (ids.has(idAnterior)) publicacao.carro.id = randomUUID();
+      ids.add(publicacao.carro.id);
+      const novoCarro = { ...publicacao.carro };
+      banco.catalogo.push(novoCarro);
+      catalogo.set(chaveCarro(novoCarro), novoCarro);
+      corrigido = true;
+    }
+  }
+  if (corrigido) await salvarLocal("demo", banco);
   return banco;
 }
 function usuario() {
@@ -218,7 +250,10 @@ export const demo = {
         (c) => chaveCarro(c) === chaveCarro(carro),
       );
       if (catalogado) carro.id = catalogado.id;
-      else banco.catalogo.push({ ...carro, verificado: false });
+      else {
+        carro.id = randomUUID();
+        banco.catalogo.push({ ...carro, verificado: false });
+      }
       const corrigido = chaveCarro(carro) !== chaveCarro(nova.identificacao);
       const publicacao = {
         id: nova.id,
