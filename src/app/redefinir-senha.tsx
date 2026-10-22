@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Platform, ScrollView, Text } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+} from "react-native";
 import { useURL } from "expo-linking";
 import { router } from "expo-router";
 import { useMutation } from "@tanstack/react-query";
@@ -58,7 +63,14 @@ export default function RedefinirSenha() {
       </ScrollView>
     );
   return (
-    <ScrollView contentContainerStyle={estilos.conteudo}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={estilos.tela}
+    >
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={estilos.conteudo}
+      >
       <Text style={estilos.titulo}>De volta à pista.</Text>
       {concluido ? (
         <>
@@ -106,6 +118,7 @@ export default function RedefinirSenha() {
           <Estado erro={salvar.error} />
         </>
       )}
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

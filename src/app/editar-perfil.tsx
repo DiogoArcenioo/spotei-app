@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { ScrollView, Text } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+} from "react-native";
 import { router } from "expo-router";
 import { useSessao } from "@/stores/useSessao";
 import { useAcao } from "@/hooks/usePublicacoes";
@@ -37,10 +42,14 @@ export default function EditarPerfil() {
     else router.replace("/perfil");
   });
   return (
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      contentContainerStyle={estilos.conteudo}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={estilos.tela}
     >
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={estilos.conteudo}
+      >
       <Text style={estilos.titulo}>Do seu jeito.</Text>
       <Avatar nome={nome} foto={avatar} tamanho={84} />
       <Botao
@@ -93,6 +102,7 @@ export default function EditarPerfil() {
         carregando={salvar.isPending}
         desabilitado={foto.isPending}
       />
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

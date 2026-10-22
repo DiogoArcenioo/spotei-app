@@ -254,7 +254,7 @@ export default function Publicar() {
   return (
     <KeyboardAvoidingView
       style={estilos.tela}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View
         style={[visual.cabecalho, revelando && { opacity: 0 }]}

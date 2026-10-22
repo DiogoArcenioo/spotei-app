@@ -12,6 +12,7 @@
     },
     "android": {
       "package": "com.spotei.app",
+      "softwareKeyboardLayoutMode": "resize",
       "blockedPermissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {

@@ -71,7 +71,7 @@ export default function Entrar() {
   });
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={estilos.tela}
     >
       <ScrollView

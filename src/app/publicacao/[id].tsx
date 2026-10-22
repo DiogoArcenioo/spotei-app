@@ -74,7 +74,7 @@ export default function DetalhePublicacao() {
   return (
     <KeyboardAvoidingView
       style={estilos.tela}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView
         ref={rolagem}
